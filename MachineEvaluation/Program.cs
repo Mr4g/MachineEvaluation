@@ -19,7 +19,7 @@ Console.WriteLine("");
 Console.WriteLine("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 Console.WriteLine("||                                                                                   ||");
 Console.WriteLine("||                                                                                   ||");
-Console.WriteLine("||   Proszę przyznawać ocenę od 0-10                                                 ||");
+Console.WriteLine("||   Proszę przyznać ocenę od 0-10                                                   ||");
 Console.WriteLine("||                                                                                   ||");
 Console.WriteLine("||                                                                                   ||");
 Console.WriteLine("||   Na podstawie ocen zostanie wyświetlona statysyka poziomu TPM od 0 do 3          ||");
@@ -31,7 +31,7 @@ Console.WriteLine("");
 
 while  (true)
 {
-    Console.WriteLine("Podaj nazwę maszn...");
+    Console.WriteLine("Podaj nazwę maszyny...");
     Console.WriteLine("");
     var name = Console.ReadLine();
     Console.WriteLine("Podaj EQ maszyny...");
@@ -43,43 +43,43 @@ while  (true)
     var machineName = $"{eq}_{name}_{department}";
     Console.WriteLine($"Pełna nazwa maszyny : {machineName}");
     Console.WriteLine("");
+    var machine = new MachineInMemory(name, eq, department);
+    machine.GradeAdded += HandleGradeAddedEvent;
+    Console.WriteLine("q - zakończ");
+    Console.WriteLine("r - statystyki i stworzenie nowego obiektu");
+    Console.WriteLine("inny klawisz kontunuacja dodawania punktów");
+    Console.WriteLine("");
     while (true)
     {
-        Console.WriteLine($"Wprowadz punktację od 0-10 za wybrany punkt z listy oceny dostępnej na maszynie");
-        var machine = new MachineInMemory(name, eq, department);
-        machine.GradeAdded += HandleGradeAddedEvent;
-        Console.WriteLine();
-        Console.WriteLine();
+        Console.WriteLine($"Wprowadz punktację...");
+
         var grade = Console.ReadLine();
-        Console.WriteLine("");
+        if (grade == "q")
+        {
+            break;
+        }
+        else if (grade == "r")
+        {
+            var statistic = machine.GetStatistics();
+            Console.WriteLine($"AVG: {statistic.Average:N2}");
+            Console.WriteLine($"Poziom TPM: {statistic.LevelTpm}");
+            Console.WriteLine($"Min: {statistic.Min}");
+            Console.WriteLine($"Max: {statistic.Max}");
+            Console.WriteLine($"Sum: {statistic.Sum}");
+            Console.WriteLine($"Licznik: {statistic.Count}");
+            break;
+        }
         try
         {
             machine.AddGrade(grade);
         }
         catch(Exception ex) 
         {
-            Console.WriteLine($"Niepoprawna wartość została dodana...");
-        }
-        Console.WriteLine("");
-        Console.WriteLine("Jeśli chcesz zakończyć dodawanie punktów wybierz q");
-        Console.WriteLine("Jeśli chcesz wyśiwetlić statystyki i przejśc do innego obiektu wybierz r");
-        Console.WriteLine("Jeśli chcesz dodać nowy obiekt wbierz n");
-        Console.WriteLine("Jeśli chcesz dodać kolejny punkt wybierz dowolny inny klawisz");
-        var input = Console.ReadLine();
-        if (input == "q")
-        {
-            break;
-        }
-        else if (input == "r")
-        {
-            var statistic = machine.GetStatistics();
-            Console.WriteLine($"AVG: {statistic.Average:N2}");
-            Console.WriteLine($"Average Letter: {statistic.LevelTpm}");
-            Console.WriteLine($"Min: {statistic.Min}");
-            Console.WriteLine($"Max: {statistic.Max}");
-            break;
-        }
+            Console.WriteLine($"Niepoprawna wartość...");
+            Console.WriteLine("");
+        }     
     }
+    Console.WriteLine("");
     Console.WriteLine("Jeśli chcesz zakończyć dodawanie punktów wybierz q");
     Console.WriteLine("Jeśli chcesz przeprowadzić ocenę nowej maszyny wybierz o");
     var input2 = Console.ReadLine();
@@ -91,5 +91,6 @@ while  (true)
 void HandleGradeAddedEvent(object sender, string mx)
 {
     Console.WriteLine($"{mx}");
+    Console.WriteLine("");
 }
 

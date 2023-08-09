@@ -52,6 +52,10 @@ namespace MachineEvaluation
             {
                 this.AddGrade(stringGrade);
             }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         public override void AddGrade(char grade)

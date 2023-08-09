@@ -18,13 +18,13 @@
         {
             get
             {
-                switch (this.Average)
+                switch (this.Sum)
                 {
-                    case var average when average >= 30:
+                    case var sum when sum >= 30:
                         return 3;
-                    case var average when average >= 20:
+                    case var sum when sum >= 20:
                         return 2;
-                    case var average when average >= 10:
+                    case var sum when sum    >= 10:
                         return 1;
                     default:
                         return 0;
@@ -45,7 +45,7 @@
             this.Count++;
             this.Sum += grade;  
             this.Min = Math.Min(grade , this.Min);
-            this.Min = Math.Max(grade, this.Max);
+            this.Max = Math.Max(grade, this.Max);
         }
     }
 }
