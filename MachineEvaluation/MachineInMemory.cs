@@ -64,15 +64,15 @@ namespace MachineEvaluation
             {
                 case 'a':
                 case 'A':
-                    this.AddGrade(10);
+                    this.AddGrade(3);
                     break;
                 case 'b':
                 case 'B':
-                    this.AddGrade(20);
+                    this.AddGrade(4);
                     break;
                 case 'c':
                 case 'C':
-                    this.AddGrade(30);
+                    this.AddGrade(5);
                     break;
                 default:
                     throw new Exception("Litera nie odpowada żadnej liczbie...");
