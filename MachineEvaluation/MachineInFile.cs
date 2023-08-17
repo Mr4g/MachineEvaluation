@@ -3,11 +3,12 @@
     public class MachineInFile : MachineBase
     {
         private const string fileName = "grades.txt";
+
+        public override event GradeAddedDelegate GradeAdded;
+
         public MachineInFile(string name, string eq, string depeartment) : base(name, eq, depeartment)
         {
         }
-
-        public override event GradeAddedDelegate GradeAdded;
 
         public override void AddGrade(float grade)
         {
@@ -25,57 +26,6 @@
             else
             {
                 throw new Exception("Niepoprawna wartość...");
-            }
-        }
-
-        public override void AddGrade(int grade)
-        {
-            float intGrade = grade;
-            this.AddGrade(intGrade);
-        }
-
-        public override void AddGrade(double grade)
-        {
-            float doubleGrade = (float)grade;
-            this.AddGrade(doubleGrade);
-        }
-
-        public override void AddGrade(long grade)
-        {
-            float longGrade = (float)grade;
-            this.AddGrade(longGrade);
-        }
-
-        public override void AddGrade(string grade)
-        {
-            if (float.TryParse(grade, out float stringGrade))
-            {
-                this.AddGrade(stringGrade);
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
-
-        public override void AddGrade(char grade)
-        {
-            switch (grade)
-            {
-                case 'a':
-                case 'A':
-                    this.AddGrade(3);
-                    break;
-                case 'b':
-                case 'B':
-                    this.AddGrade(4);
-                    break;
-                case 'c':
-                case 'C':
-                    this.AddGrade(5);
-                    break;
-                default:
-                    throw new Exception("Litera nie odpowada żadnej liczbie...");
             }
         }
 

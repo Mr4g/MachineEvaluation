@@ -28,7 +28,7 @@ Console.WriteLine("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 Console.WriteLine("");
 Console.WriteLine("");
 
-while  (true)
+while (true)
 {
     Console.WriteLine("Podaj nazwę maszyny...");
     Console.WriteLine("");
@@ -95,17 +95,17 @@ while  (true)
         {
             machine.AddGrade(grade);
         }
-        catch(Exception ex) 
+        catch (Exception ex)
         {
             Console.WriteLine($"Niepoprawna wartość...");
             Console.WriteLine("");
-        }     
+        }
     }
     Console.WriteLine("");
     Console.WriteLine("Jeśli chcesz zakończyć dodawanie punktów wybierz q");
     Console.WriteLine("Jeśli chcesz przeprowadzić ocenę nowej maszyny wybierz o");
     var input2 = Console.ReadLine();
-    if (input2 == "q") 
+    if (input2 == "q")
     {
         break;
     }
