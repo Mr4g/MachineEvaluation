@@ -1,9 +1,9 @@
 ﻿namespace MachineEvaluation
 {
-    public class MachineInMemory : MachineBase
+    public class MachineInFile : MachineBase
     {
-        private List<float> grades = new List<float>();
-        public MachineInMemory(string name, string eq, string depeartment) : base(name, eq, depeartment)
+        private const string fileName = "grades.txt";
+        public MachineInFile(string name, string eq, string depeartment) : base(name, eq, depeartment)
         {
         }
 
@@ -13,10 +13,13 @@
         {
             if (grade >= 0 && grade <= 10)
             {
-                this.grades.Add(grade);
-                if (GradeAdded != null)
+                using (var writer = File.AppendText(fileName))
                 {
-                    GradeAdded(this, "Prawidłowo dodana wartość");
+                    writer.WriteLine(grade);
+                    if (GradeAdded != null)
+                    {
+                        GradeAdded(this, "Prawidłowo dodana wartość");
+                    }
                 }
             }
             else
@@ -78,12 +81,41 @@
 
         public override Statistics GetStatistics()
         {
-            var statistics = new Statistics();
-            foreach(var grade in this.grades)
+            var gradesFromFile = this.ReadGradesFromFile();
+            var result = this.CountStatistics(gradesFromFile);
+            return result;
+        }
+
+        private List<float> ReadGradesFromFile()
+        {
+            var grades = new List<float>();
+            if (File.Exists($"{fileName}"))
             {
-                statistics.AddGrade(grade);
+                using (var reader = File.OpenText($"{fileName}"))
+                {
+                    var line = reader.ReadLine();
+                    while (line != null)
+                    {
+                        var number = float.Parse(line);
+                        grades.Add(number);
+                        line = reader.ReadLine();
+                    }
+                }
             }
-            return statistics; 
+            return grades;
+        }
+        private Statistics CountStatistics(List<float> grades)
+        {
+            {
+                var statistics = new Statistics();
+
+                foreach (var grade in grades)
+                {
+                    statistics.AddGrade(grade);
+                }
+
+                return statistics;
+            }
         }
     }
 }

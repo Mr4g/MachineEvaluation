@@ -1,5 +1,4 @@
-﻿
-namespace MachineEvaluation
+﻿namespace MachineEvaluation
 {
 
     public abstract class MachineBase : IMachine

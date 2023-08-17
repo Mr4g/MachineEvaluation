@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MachineEvaluation;
+﻿using MachineEvaluation;
 
 string windowWidth = "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||";
 Console.WindowWidth = windowWidth.Length;
@@ -43,7 +42,30 @@ while  (true)
     var machineName = $"{eq}_{name}_{department}";
     Console.WriteLine($"Pełna nazwa maszyny : {machineName}");
     Console.WriteLine("");
-    var machine = new MachineInMemory(name, eq, department);
+    Console.WriteLine("Wybierz czy będziesz pracować na pliku czy na pamięci..");
+    Console.WriteLine("r - pamieć");
+    Console.WriteLine("p - plik");
+    MachineBase machine = null;
+
+    while (true)
+    {
+        var workMode = Console.ReadLine();
+        if (workMode == "r")
+        {
+            machine = new MachineInMemory(name, eq, department);
+            break;
+        }
+        else if (workMode == "p")
+        {
+            machine = new MachineInFile(name, eq, department);
+            break;
+        }
+        else
+        {
+            Console.WriteLine("Został źle wybrany tryb pracy...");
+        }
+    }
+
     machine.GradeAdded += HandleGradeAddedEvent;
     Console.WriteLine("q - zakończ");
     Console.WriteLine("r - statystyki i stworzenie nowego obiektu");
